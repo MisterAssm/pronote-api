@@ -1,0 +1,42 @@
+plugins {
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.31'
+    id "com.github.johnrengelman.shadow" version "7.0.0"
+}
+apply plugin: "java-library"
+apply plugin: "kotlin"
+apply from: rootProject.file("dependencies.gradle")
+apply from: rootProject.file('configure-maven-publish.gradle')
+apply plugin: 'kotlinx-serialization'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+    //api deps.kotlin.coroutines.core
+    runtimeOnly deps.kotlin.reflect
+    implementation deps.kotlin.stdlib8
+    implementation deps.kotlin.okhttp
+    implementation deps.kotlin.jackson
+    implementation deps.kotlin.serialization
+
+    testImplementation deps.kotlin.test.mockito
+    testImplementation deps.test.junit
+    testImplementation deps.test.mockito
+    testImplementation deps.test.truth
+}
+
+tasks {
+    jar {
+        enabled = true
+    }
+
+    shadowJar {
+        //
+    }
+
+    build {
+        dependsOn(shadowJar)
+    }
+}
+
+//apply from: rootProject.file("spotless_plugin_config.gradle")
