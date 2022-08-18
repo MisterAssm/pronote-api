@@ -1,0 +1,8 @@
+abi_version=1.7.0
+builtins_platform=JS
+compiler_version=1.7.10
+depends=kotlin
+ir_version=1.0.0
+jsOutputName=KotlinBigInteger-bignum-js-ir
+metadata_version=1.4.1
+unique_name=com.ionspin.kotlin\:bignum

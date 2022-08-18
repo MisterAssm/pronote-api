@@ -1,0 +1,8 @@
+builtins_platform=JS
+unique_name=org.jetbrains.kotlinx\:kotlinx-datetime
+ir_version=1.0.0
+compiler_version=1.7.0
+jsOutputName=Kotlin-DateTime-library-kotlinx-datetime-js-ir
+depends=org.jetbrains.kotlinx\:kotlinx-serialization-core kotlin
+abi_version=1.7.0
+metadata_version=1.4.1

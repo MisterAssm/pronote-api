@@ -1,0 +1,8 @@
+builtins_platform=JS
+unique_name=fr.misterassm.kronote\:Kronote
+ir_version=1.0.0
+compiler_version=1.7.10
+jsOutputName=Kronote
+depends=com.soywiz.korlibs.krypto\:krypto io.ktor\:ktor-client-core org.jetbrains.kotlinx\:kotlinx-serialization-json com.ionspin.kotlin\:bignum org.jetbrains.kotlinx\:kotlinx-datetime io.ktor\:ktor-events io.ktor\:ktor-websocket-serialization io.ktor\:ktor-serialization io.ktor\:ktor-websockets io.ktor\:ktor-http io.ktor\:ktor-utils io.ktor\:ktor-io org.jetbrains.kotlinx\:kotlinx-coroutines-core org.jetbrains.kotlinx\:atomicfu org.jetbrains.kotlinx\:kotlinx-serialization-core kotlin org.jetbrains.kotlin\:kotlinx-atomicfu-runtime
+abi_version=1.7.0
+metadata_version=1.4.1

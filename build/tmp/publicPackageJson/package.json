@@ -1,0 +1,16 @@
+{
+  "name": "Kronote",
+  "version": "0.1.0",
+  "main": "Kronote.js",
+  "types": "Kronote.d.ts",
+  "devDependencies": {
+    "source-map-support": "0.5.21",
+    "dukat": "0.5.8-rc.4"
+  },
+  "dependencies": {
+    "kronote-file": "0.0.1"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

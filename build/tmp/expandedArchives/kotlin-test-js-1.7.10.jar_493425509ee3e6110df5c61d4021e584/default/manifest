@@ -1,0 +1,8 @@
+builtins_platform=JS
+unique_name=kotlin-test
+ir_version=1.0.0
+compiler_version=1.7.20-dev-52
+jsOutputName=kotlin-kotlin-test-js-ir
+depends=kotlin
+abi_version=1.6.0
+metadata_version=1.4.1

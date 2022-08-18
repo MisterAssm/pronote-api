@@ -1,0 +1,73 @@
+{
+  "version": "9",
+  "items": {
+    "be74b32555f1d2150216b0948cbfca17": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlinx\\kotlinx-serialization-json-js\\1.4.0-RC\\4ebdc216f35abedaec50f02c27a044f8458701f0\\kotlinx-serialization-json-jsir-1.4.0-RC.klib"
+    },
+    "58bd9025d2de84cfb986425a7dfdde35": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlinx\\kotlinx-serialization-core-js\\1.4.0-RC\\20e1253779c01763c85b5334ae849bbcb64832d6\\kotlinx-serialization-core-jsir-1.4.0-RC.klib"
+    },
+    "9f7c538aaee65ecad650c7d850461110": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlin\\kotlin-stdlib-js\\1.7.20-Beta\\1bfe087b32f3664a313f5e0240ef6a3efa095678\\kotlin-stdlib-js-1.7.20-Beta.jar",
+      "target": "kotlin\\1.7.20-Beta"
+    },
+    "d34d5f3fe3bb4ea8e504d80e6ad5384a": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlin\\kotlin-stdlib-common\\1.7.20-Beta\\7dc8e0a9a7295cf0dd3787c75a62ecfd8e64ad3e\\kotlin-stdlib-common-1.7.20-Beta.jar"
+    },
+    "077284482631c9f1a88fdc28af155298": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\com.soywiz.korlibs.krypto\\krypto-js\\3.0.0\\80f519533ca2dca8f548e1e5b68fd1abb63ace0d\\krypto-js-3.0.0.klib"
+    },
+    "628e48a3cef2e3dd43f35908bef853c7": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\com.ionspin.kotlin\\bignum-js\\0.3.7\\608d37f468a7ac775681d3fe3c2ea6baba3cf5cf\\bignum-jsir-0.3.7.klib"
+    },
+    "c757ea0193ef52274111b7dfcef33aa3": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlinx\\kotlinx-datetime-js\\0.4.0\\254f7fbd94ca83b23368b6abdd89d9ad72e0a832\\kotlinx-datetime-jsir-0.4.0.klib",
+      "target": "Kotlin-DateTime-library-kotlinx-datetime-js-ir\\0.4.0"
+    },
+    "650c7aa660c79d0841f201c45a29af09": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\io.ktor\\ktor-client-core-js\\2.1.0\\2be66266d780e29002756c61b155fcf859b519d2\\ktor-client-core-jsir-2.1.0.klib",
+      "target": "ktor-ktor-client-core-js-ir\\2.1.0"
+    },
+    "f3b91fa64221406ab676cc7572b34cea": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\io.ktor\\ktor-events-js\\2.1.0\\ff07dd10831a49391f75257038de99250c5e8710\\ktor-events-jsir-2.1.0.klib"
+    },
+    "60b314436cdddd04c7876c8a1d1424c7": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\io.ktor\\ktor-http-js\\2.1.0\\a9d3b9fa5a3f969e4ccdc93dd97c1c1ad9fde173\\ktor-http-jsir-2.1.0.klib"
+    },
+    "8f6e1bcb306c64da23750a3487444abe": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\io.ktor\\ktor-utils-js\\2.1.0\\f3843c4791f35ff5227c5f42f2cb6053cc7e4b67\\ktor-utils-jsir-2.1.0.klib"
+    },
+    "70f981d722058d63144ac4027a25e507": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\io.ktor\\ktor-io-js\\2.1.0\\92606d223f9d0971387760af05e5c7680ffc208f\\ktor-io-jsir-2.1.0.klib"
+    },
+    "87b37b026e9680692b36e7c4c08334c2": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlinx\\kotlinx-coroutines-core-js\\1.6.4\\791d62c16e6fad7cc9b1e6fafe88a3d454744d99\\kotlinx-coroutines-core-jsir-1.6.4.klib"
+    },
+    "489089308e6bacd4b18fc93c501bb01c": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlinx\\atomicfu-js\\0.17.3\\5fd992f78532945e29a1c54279eafffe2a0c95fe\\atomicfu-jsir-0.17.3.klib"
+    },
+    "68b4fc3260b20bef86b65f0a39fae75a": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlin\\atomicfu\\1.6.21\\f486917a9c89e5c7d5d08009d58ad810a57a7011\\atomicfu-1.6.21.jar"
+    },
+    "cf1bde8234ae9922afebbf99dd521ce5": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\io.ktor\\ktor-websocket-serialization-js\\2.1.0\\a090feac7db38fc6f423e825ec88307e22c9f4ab\\ktor-websocket-serialization-jsir-2.1.0.klib"
+    },
+    "7c74dfc56bcd2b75d7812f4ff61f732c": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\io.ktor\\ktor-serialization-js\\2.1.0\\e5780092559b93076250fc4b3312a4d248b722b2\\ktor-serialization-jsir-2.1.0.klib"
+    },
+    "83e87ef5cfdd3cfa4aabbd8809eb9aad": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\io.ktor\\ktor-websockets-js\\2.1.0\\b579deace5737e1e89a06ad9c1b7976f3840c193\\ktor-websockets-jsir-2.1.0.klib"
+    },
+    "895195c673d7ea83de5af201c50e8279": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlin\\kotlin-test-js-runner\\1.7.10\\c776694bcd8ec38ab942d5ca1d896ca805c9541f\\kotlin-test-js-runner-1.7.10.jar",
+      "target": "kotlin-test-js-runner\\1.7.10"
+    },
+    "493425509ee3e6110df5c61d4021e584": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlin\\kotlin-test-js\\1.7.10\\b198158aec492c74cc9111bb8237f170192e270c\\kotlin-test-js-1.7.10.jar",
+      "target": "kotlin-test\\1.7.10"
+    },
+    "d085c78b8c9669f64073df2b64187d47": {
+      "src": "C:\\Users\\assim\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlinx\\kotlinx-coroutines-test-js\\1.6.4\\fb67a9257d9f18db0c9c668229357faa15a2fc5a\\kotlinx-coroutines-test-jsir-1.6.4.klib"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "ktor-ktor-client-core-js-ir",
+  "version": "2.1.0",
+  "main": "ktor-ktor-client-core-js-ir.js",
+  "types": "ktor-ktor-client-core-js-ir.d.ts",
+  "devDependencies": {
+    "dukat": "0.5.8-rc.4"
+  },
+  "dependencies": {
+    "node-fetch": "2.6.7",
+    "abort-controller": "3.0.0",
+    "ws": "8.5.0"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}
