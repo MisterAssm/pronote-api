@@ -36,6 +36,10 @@ if (secretPropsFile.exists()) {
 
 fun getExtraString(name: String) = ext[name]?.toString()
 
+val javadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+}
+
 publishing {
     // Configure maven central repository
     repositories {
@@ -53,7 +57,7 @@ publishing {
     publications.withType<MavenPublication> {
 
         // Stub javadoc.jar artifact
-        artifact("kronote")
+        artifact(javadocJar.get())
 
         // Provide artifacts information requited by Maven Central
         pom {
