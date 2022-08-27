@@ -15,10 +15,16 @@ import io.ktor.client.engine.okhttp.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.toJavaLocalDate
+import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlinx.serialization.modules.SerializersModule
+import java.time.DayOfWeek
+import java.time.Month
+import java.time.temporal.WeekFields
 import java.util.*
 
 actual class KronoteImpl actual constructor(
@@ -202,4 +208,10 @@ actual class KronoteImpl actual constructor(
                     }
                 }
             } ?: TODO("ERROR")
+
+    override suspend fun retrieveTimetable(localDate: LocalDate): Timetable {
+        return retrieveTimetable(localDate.toJavaLocalDate().get(WeekFields.of(DayOfWeek.MONDAY, 7).weekOfYear()) - 34).apply {
+            courseList = courseList.filter { it.date.date == localDate }
+        }
+    }
 }
