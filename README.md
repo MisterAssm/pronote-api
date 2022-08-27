@@ -13,12 +13,44 @@
 
 ## Vue d'ensemble
 
-- Connection à un compte **Pronote Étudiant** via URL et CAS (bientôt)
-- Récupérer **l'emploi du temps** d'une semaine/date spécifique
+<details><summary>Connection à un compte **Pronote Étudiant** via URL et CAS (bientôt)</summary><p>
+
+#### Kotlin
+
+```kotlin
+    val kronote = connectKronote { // or just ``kronote`` to create instance without connect to Pronote
+        username = "demonstration"
+        password = "pronotevs"
+        indexUrl = "https://demo.index-education.net/pronote/eleve.html?login=true"
+        autoReconnect = true // Default: false
+    }.getOrThrow() // or Result#onSuccess / Result#onFailure
+```
+</p></details>
+
+<details><summary>Récupérer **l'emploi du temps** d'une semaine/date spécifique</summary><p>
+
+#### Kotlin
+
+```kotlin
+// Récupérer l'emploi du temps de la semaine actuelle
+val timetable = kronote.retrieveTimetable()
+
+// Récupérer l'emploi du temps d'une semaine spécifique
+val timetable = kronote.retrieveTimetable(5) // Emploi du temps de la semaine n°5
+
+// Récupérer l'emploi du temps d'un jour en particulier
+val timetable = kronote.retrieveTimetable(Localdate(2022, Month.SEPTEMBER, 1)) // Emploi du temps du 1er septembre 2022
+
+// Récupérer le nom de chaque matière et l'imprimer dans la console
+timetable.courseList.forEach { println(it.subject) }
+```
+</p></details>
+
+
 
 ## Contributing
 
-Kronote est un projet libre et open source sous licence [MIT License] (LICENSE.md).
+Kronote est un projet libre et open source sous licence [MIT License](LICENSE.md).
 
 Vous pouvez contribuer à poursuivre son développement en :
 
