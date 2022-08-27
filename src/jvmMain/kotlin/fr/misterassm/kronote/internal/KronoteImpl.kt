@@ -190,10 +190,15 @@ actual class KronoteImpl actual constructor(
             ?.get("donnees")
             ?.let {
                 json.decodeFromJsonElement<Timetable>(it).apply {
-                    it.jsonObject["absences"]?.jsonObject?.get("joursCycle")?.jsonObject?.get("V")?.jsonArray?.first()?.jsonObject?.get(
-                        "numeroSemaine"
-                    )?.jsonPrimitive?.int?.let { week ->
-                        this.weekNumber = week
+                    when (weekNumber) {
+                        null -> {
+                            it.jsonObject["absences"]?.jsonObject?.get("joursCycle")?.jsonObject?.get("V")?.jsonArray?.first()?.jsonObject?.get(
+                                "numeroSemaine"
+                            )?.jsonPrimitive?.int?.let { week ->
+                                this.weekNumber = week
+                            }
+                        }
+                        else -> this.weekNumber = weekNumber
                     }
                 }
             } ?: TODO("ERROR")
