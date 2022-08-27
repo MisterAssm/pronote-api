@@ -11,6 +11,9 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
+ext["signing.keyId"] = null
+ext["signing.password"] = null
+ext["signing.secretKeyRingFile"] = null
 ext["ossrhUsername"] = null
 ext["ossrhPassword"] = null
 
@@ -24,6 +27,9 @@ if (secretPropsFile.exists()) {
         ext[name.toString()] = value
     }
 } else {
+    ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
+    ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
+    ext["signing.secretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
     ext["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
     ext["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
 }
@@ -82,7 +88,7 @@ signing {
     sign(publishing.publications)
 }
 
-group = "fr.misterassm.kronote"
+group = "io.github.misterassm"
 version = "0.2.0"
 
 repositories {
