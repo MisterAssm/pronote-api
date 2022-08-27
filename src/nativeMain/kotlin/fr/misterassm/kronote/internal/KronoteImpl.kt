@@ -1,10 +1,10 @@
 package fr.misterassm.kronote.internal
 
 import fr.misterassm.kronote.api.Kronote
-import fr.misterassm.kronote.api.adapter.RetrieveAdapter
 import fr.misterassm.kronote.api.models.enum.KronoteStatus
 import fr.misterassm.kronote.api.models.enum.PronotePage
 import fr.misterassm.kronote.api.models.retrieve.Timetable
+import kotlinx.datetime.LocalDate
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 
@@ -35,6 +35,10 @@ actual class KronoteImpl actual constructor(
     }
 
     override suspend fun retrieveTimetable(weekNumber: Int?): Timetable {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun retrieveTimetable(localDate: LocalDate): Timetable {
         TODO("Not yet implemented")
     }
 
