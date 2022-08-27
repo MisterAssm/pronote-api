@@ -1,5 +1,6 @@
 plugins {
-    kotlin("multiplatform") version "1.7.10"
+    kotlin("multiplatform")
+    kotlin("plugin.serialization")
 }
 
 group = "fr.misterassm.kronote"
@@ -11,20 +12,20 @@ repositories {
 
 kotlin {
     jvm {
+        withJava()
+
         compilations.all {
             kotlinOptions.jvmTarget = "1.8"
         }
-        withJava()
+
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
         }
     }
 
-    js(BOTH) {
-        browser {
-            commonWebpackConfig {
-                cssSupport.enabled = true
-            }
+    js(IR) {
+        compilations.all {
+            compileKotlinTask.kotlinOptions.freeCompilerArgs += listOf("-Xerror-tolerance-policy=SEMANTIC")
         }
     }
 
@@ -37,9 +38,15 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
-    
+
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(KotlinX.serialization.json)
+                implementation("io.ktor:ktor-client-okhttp:2.1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
