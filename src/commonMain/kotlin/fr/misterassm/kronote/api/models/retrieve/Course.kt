@@ -3,7 +3,7 @@ package fr.misterassm.kronote.api.models.retrieve
 import fr.misterassm.kronote.api.models.enum.CourseStatus
 import fr.misterassm.kronote.api.models.identification.KronoteDoubleIdentification
 import fr.misterassm.kronote.api.models.identification.KronoteTripleIdentification
-import fr.misterassm.kronote.internal.tools.toKronoteDate
+import fr.misterassm.kronote.internal.tools.*
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
@@ -18,16 +18,11 @@ import kotlinx.serialization.json.*
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
-const val GROUP_GENDER = 2
-const val TEACHER_GENDER = 3
-const val SUBJECT_GENDER = 16
-const val ROOM_GENDER = 17
-
 @Serializable(with = Course.Companion::class)
 data class Course constructor(
     val courseId: String,
     val modelType: Int,
-    val p: Int,
+    internal val p: Int,
     val status: CourseStatus,
     val isCancelled: Boolean = false,
     val place: Int = 0,
