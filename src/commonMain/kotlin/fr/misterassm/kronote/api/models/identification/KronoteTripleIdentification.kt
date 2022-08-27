@@ -9,5 +9,5 @@ data class KronoteTripleIdentification(
     @SerialName("L") val name: String,
     @SerialName("G") val gender: Int,
 ) {
-    override fun toString(): String = "$name ($id)"
+    override fun toString(): String = name
 }
