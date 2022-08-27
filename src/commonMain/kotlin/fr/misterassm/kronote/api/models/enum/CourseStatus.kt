@@ -7,6 +7,8 @@ enum class CourseStatus(val status: String) {
     REPLACEMENT("Remplacement"),
     CANCELLED("Cours annulé");
 
+    fun isSpecial() = !equals(NONE)
+
     companion object {
         val statusMap = values().associateBy(CourseStatus::status)
     }
