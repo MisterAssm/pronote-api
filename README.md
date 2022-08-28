@@ -58,7 +58,7 @@ dependencies {
 
 ## Vue d'ensemble
 
-<details><summary>Connection à un compte **Pronote Étudiant** via URL et CAS (bientôt)</summary><p>
+<details><summary>Connection à un compte <strong>Pronote Étudiant</strong> via URL et CAS (<strong>bientôt</strong>)</summary><p>
 
 #### Kotlin
 
@@ -72,7 +72,7 @@ dependencies {
 ```
 </p></details>
 
-<details><summary>Récupérer **l'emploi du temps** d'une semaine/date spécifique</summary><p>
+<details><summary>Récupérer <strong>l'emploi du temps</strong> d'une semaine/date spécifique</summary><p>
 
 #### Kotlin
 
