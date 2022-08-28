@@ -1,6 +1,7 @@
 <p align="center">
     <a href="https://kotlinlang.org/docs/components-stability.html" target="_blank" rel="noopener"><img src="https://kotl.in/badges/alpha.svg" alt="Kotlin Alpha" /></a>
     <a href="https://search.maven.org/search?q=g:io.github.misterassm" target="_blank" rel="noopener"><img src="https://img.shields.io/maven-central/v/io.github.misterassm/kronote" alt="Maven Central" /></a>
+    <a href="https://www.codefactor.io/repository/github/misterassm/pronote-api/overview/development"><img src="https://www.codefactor.io/repository/github/misterassm/pronote-api/badge/development" alt="CodeFactor" /></a>
 </p>
 
 **Kronote** est une librairie open source pour JVM (Java, Kotlin, Scala) pour le service d'administration des étudiants Pronote. Cette librairie n'utilise pas le service web [HYPERPLANNING](https://www.index-education.com/fr/hyperplanning-info196-service-web.php) mis en place par [Index-Education](https://www.index-education.com/). L'objectif est de permettre à chacun d'apprendre la programmation informatique à partir de nos outils étudiant du quotidien et de permettre de créer des outils spécifique aux étudiants
