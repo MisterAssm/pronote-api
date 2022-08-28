@@ -1,3 +1,8 @@
+<p align="center">
+    <a href="https://kotlinlang.org/docs/components-stability.html" target="_blank" rel="noopener"><img src="https://kotl.in/badges/alpha.svg" alt="Kotlin Alpha" /></a>
+    <a href="https://search.maven.org/search?q=g:io.github.misterassm" target="_blank" rel="noopener"><img src="https://img.shields.io/maven-central/v/io.github.misterassm/kronote" alt="Maven Central" /></a>
+</p>
+
 **Kronote** est une librairie open source pour JVM (Java, Kotlin, Scala) pour le service d'administration des étudiants Pronote. Cette librairie n'utilise pas le service web [HYPERPLANNING](https://www.index-education.com/fr/hyperplanning-info196-service-web.php) mis en place par [Index-Education](https://www.index-education.com/). L'objectif est de permettre à chacun d'apprendre la programmation informatique à partir de nos outils étudiant du quotidien et de permettre de créer des outils spécifique aux étudiants
 
 **Plus d'informations quant aux objectifs de cette librairie dans [l'issue #3](https://github.com/MisterAssm/pronote-api/issues/3)**
@@ -10,6 +15,46 @@
 | JVM (Java, Kotlin, Scala) | 🚧 Développement |
 | Javascript/Typescript     | ⛔ Non disponible |
 | Natif (C/Go)              | ⛔ Non disponible |
+
+## Installation
+
+#### Gradle Kotlin Script (build.gradle.kts)
+```kts
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("io.github.misterassm:kronote-jvm:0.2.1")
+}
+```
+
+<details><summary>Gradle groovy (build.gradle)</summary><p>
+
+```groovy
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.github.misterassm:kronote-jvm:0.2.1'
+}
+```
+</p></details>
+
+<details><summary>Maven (pom.xml)</summary><p>
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>io.github.misterassm</groupId>
+        <artifactId>kronote-jvm</artifactId>
+        <version>0.2.1</version>
+    </dependency>
+</dependencies>
+```
+</p></details>
+
 
 ## Vue d'ensemble
 
