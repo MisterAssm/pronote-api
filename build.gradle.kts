@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.kotlin.dsl.`maven-publish`
 import org.gradle.kotlin.dsl.signing
@@ -8,8 +10,11 @@ plugins {
     signing
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow")
 }
+
+group = "io.github.misterassm"
+version = "0.2.1"
 
 ext["signing.keyId"] = null
 ext["signing.password"] = null
@@ -17,83 +22,17 @@ ext["signing.secretKeyRingFile"] = null
 ext["ossrhUsername"] = null
 ext["ossrhPassword"] = null
 
-val secretPropsFile = project.rootProject.file("local.properties")
-if (secretPropsFile.exists()) {
-    secretPropsFile.reader().use {
-        Properties().apply {
-            load(it)
+with(project.rootProject.file("local.properties")) {
+    if (exists()) {
+        reader().use {
+            Properties().apply { load(it) }
+        }.onEach { (name, value) ->
+            ext[name.toString()] = value
         }
-    }.onEach { (name, value) ->
-        ext[name.toString()] = value
     }
-} else {
-    ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
-    ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
-    ext["signing.secretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
-    ext["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
-    ext["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
 }
 
 fun getExtraString(name: String) = ext[name]?.toString()
-
-val javadocJar by tasks.registering(Jar::class) {
-    archiveClassifier.set("javadoc")
-}
-
-publishing {
-    // Configure maven central repository
-    repositories {
-        maven {
-            name = "sonatype"
-            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = getExtraString("ossrhUsername")
-                password = getExtraString("ossrhPassword")
-            }
-        }
-    }
-
-    // Configure all publications
-    publications.withType<MavenPublication> {
-
-        // Stub javadoc.jar artifact
-        artifact(javadocJar.get())
-
-        // Provide artifacts information requited by Maven Central
-        pom {
-            name.set("Kronote")
-            description.set("Library to easily retrieve information from a Pronote server (Index-Education) for JVM/JS/Native")
-            url.set("https://github.com/MisterAssm/pronote-api")
-
-            licenses {
-                license {
-                    name.set("MIT")
-                    url.set("https://opensource.org/licenses/MIT")
-                }
-            }
-            developers {
-                developer {
-                    id.set("MisterAssm")
-                    name.set("Assim ZEMOUCHI")
-                    email.set("assim.zpr@gmail.com")
-                }
-            }
-            scm {
-                url.set("https://github.com/MisterAssm/pronote-api")
-            }
-
-        }
-    }
-}
-
-// Signing artifacts. Signing.* extra properties values will be used
-
-signing {
-    sign(publishing.publications)
-}
-
-group = "io.github.misterassm"
-version = "0.2.0"
 
 repositories {
     mavenCentral()
@@ -106,9 +45,7 @@ kotlin {
         compilations.all {
             kotlinOptions.jvmTarget = "1.8"
             kotlinOptions.freeCompilerArgs = listOf(
-                "-module-name",
-                project.path.replace(":", ""),
-                "-Xopt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlin.RequiresOptIn",
                 "-Xjsr305=strict"
             )
         }
@@ -138,7 +75,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(KotlinX.serialization.json)
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+                implementation(KotlinX.datetime)
             }
         }
         val commonTest by getting {
@@ -148,7 +85,7 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-okhttp:2.1.0")
+                implementation(Ktor.client.okHttp)
             }
         }
         val jvmTest by getting
@@ -172,13 +109,80 @@ kotlin {
     }
 }
 
-tasks {
-    val shadowJar = withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
-        from(sourceSets["main"].output)
-        archiveFileName.set("${rootProject.name}.${extension}")
+fun registerShadowJar(targetName: String) {
+    kotlin.targets.named<KotlinJvmTarget>(targetName) {
+        compilations.named("main") {
+            tasks {
+                val shadowJar = register<ShadowJar>("${targetName}ShadowJar") {
+                    group = "build"
+                    from(output)
+                    configurations = listOf(runtimeDependencyFiles)
+                    archiveAppendix.set(targetName)
+                    archiveClassifier.set("all")
+                    mergeServiceFiles()
+                }
+                getByName("${targetName}Jar") {
+                    finalizedBy(shadowJar)
+                }
+            }
+        }
+    }
+}
+
+registerShadowJar("jvm")
+
+val javadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+}
+
+val jvmShadowJar by tasks.named("jvmShadowJar")
+
+publishing {
+    // Configure maven central repository
+    repositories {
+        maven {
+            name = "sonatype"
+            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = getExtraString("ossrhUsername")
+                password = getExtraString("ossrhPassword")
+            }
+        }
     }
 
-    build {
-        dependsOn(shadowJar)
+    // Configure all publications
+    publications.withType<MavenPublication> {
+
+        artifact(jvmShadowJar)
+        artifact(javadocJar.get())
+
+        // Provide artifacts information requited by Maven Central
+        pom {
+            name.set("Kronote")
+            description.set("Library to easily retrieve information from a Pronote server (Index-Education) for JVM/JS/Native")
+            url.set("https://github.com/MisterAssm/pronote-api")
+
+            licenses {
+                license {
+                    name.set("MIT")
+                    url.set("https://opensource.org/licenses/MIT")
+                }
+            }
+            developers {
+                developer {
+                    id.set("MisterAssm")
+                    name.set("Assim ZEMOUCHI")
+                    email.set("assim.zpr@gmail.com")
+                }
+            }
+            scm {
+                url.set("https://github.com/MisterAssm/pronote-api")
+            }
+
+        }
     }
+}
+
+signing {
+    sign(publishing.publications)
 }
