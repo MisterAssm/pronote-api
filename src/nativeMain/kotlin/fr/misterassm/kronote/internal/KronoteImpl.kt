@@ -8,7 +8,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 
-actual class KronoteImpl actual constructor(
+internal actual class KronoteImpl actual constructor(
     actual val username: String,
     actual val password: String,
     actual val indexUrl: String,

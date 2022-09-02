@@ -20,3 +20,6 @@ internal expect class KronoteImpl(
     }
 
 }
+
+
+internal fun KronoteImpl.isHelloWorld() = autoReconnect

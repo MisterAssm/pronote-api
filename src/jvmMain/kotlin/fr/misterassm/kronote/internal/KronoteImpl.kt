@@ -27,7 +27,7 @@ import java.time.Month
 import java.time.temporal.WeekFields
 import java.util.*
 
-actual class KronoteImpl actual constructor(
+internal actual class KronoteImpl actual constructor(
     actual val username: String,
     actual val password: String,
     actual val indexUrl: String,
