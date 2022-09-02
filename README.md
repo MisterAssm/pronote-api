@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.misterassm:kronote-jvm:0.2.1")
+    implementation("io.github.misterassm:kronote-jvm:0.3.2")
 }
 ```
 
@@ -38,7 +38,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.github.misterassm:kronote-jvm:0.2.1'
+    implementation 'io.github.misterassm:kronote-jvm:0.3.2'
 }
 ```
 </p></details>
@@ -50,7 +50,7 @@ dependencies {
     <dependency>
         <groupId>io.github.misterassm</groupId>
         <artifactId>kronote-jvm</artifactId>
-        <version>0.2.1</version>
+        <version>0.3.2</version>
     </dependency>
 </dependencies>
 ```
