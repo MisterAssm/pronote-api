@@ -1,8 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.kotlin.dsl.`maven-publish`
-import org.gradle.kotlin.dsl.signing
 import java.util.*
 
 plugins {
@@ -14,7 +11,7 @@ plugins {
 }
 
 group = "io.github.misterassm"
-version = "0.3.0"
+version = "0.3.1"
 
 ext["signing.keyId"] = null
 ext["signing.password"] = null
