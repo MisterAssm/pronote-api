@@ -1,47 +1,24 @@
 package fr.misterassm.kronote.internal
 
 import fr.misterassm.kronote.api.KronoteSession
-import fr.misterassm.kronote.api.models.enum.KronoteStatus
-import fr.misterassm.kronote.api.models.enum.PronotePage
 import fr.misterassm.kronote.api.models.retrieve.Timetable
+import io.ktor.client.*
 import kotlinx.datetime.LocalDate
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
+import kotlin.time.Duration
 
-internal actual class KronoteSessionImpl actual constructor(
-    actual val username: String,
-    actual val password: String,
-    actual val indexUrl: String,
-    actual val autoReconnect: Boolean
-) : KronoteSession {
-
-    override fun fetchKronoteStatus(): KronoteStatus {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun connection(): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun callFunction(function: String, dataMap: Map<String, Any>): JsonElement {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun navigationTo(pronotePage: PronotePage, dataMap: Map<String, Any>): JsonElement {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun retrieveTimetable(weekNumber: Int?): Timetable {
-        TODO("Not yet implemented")
-    }
+internal actual class KronoteSessionImpl(
+    username: String,
+    password: String,
+    indexUrl: String,
+    autoReconnect: Pair<Boolean, Duration>
+) : KronoteSession(username, password, indexUrl, autoReconnect) {
 
     override suspend fun retrieveTimetable(localDate: LocalDate): Timetable {
         TODO("Not yet implemented")
     }
 
     actual companion object {
-        actual val json: Json
+        actual val client: HttpClient
             get() = TODO("Not yet implemented")
     }
-
 }

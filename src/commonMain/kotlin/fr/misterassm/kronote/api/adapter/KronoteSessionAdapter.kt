@@ -2,11 +2,13 @@ package fr.misterassm.kronote.api.adapter
 
 import fr.misterassm.kronote.api.models.enum.PronotePage
 import fr.misterassm.kronote.api.models.retrieve.Timetable
+import kotlinx.coroutines.Job
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.json.JsonElement
-import kotlin.jvm.JvmOverloads
 
 interface KronoteSessionAdapter {
+
+    fun keepSessionJob(): Result<Job>
 
     suspend fun initEncryption(): Boolean
 
@@ -19,6 +21,8 @@ interface KronoteSessionAdapter {
     suspend fun callFunction(function: String, dataMap: Map<String, Any> = mapOf()): JsonElement
 
     suspend fun navigationTo(pronotePage: PronotePage, dataMap: Map<String, Any> = mapOf()): JsonElement
+
+    fun prepareSessionKeeping()
 
     suspend fun retrieveTimetable(weekNumber: Int? = null): Timetable
 

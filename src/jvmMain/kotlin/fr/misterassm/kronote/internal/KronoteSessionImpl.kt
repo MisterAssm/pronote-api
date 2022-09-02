@@ -8,12 +8,13 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toJavaLocalDate
 import java.time.DayOfWeek
 import java.time.temporal.WeekFields
+import kotlin.time.Duration
 
 internal actual class KronoteSessionImpl(
     username: String,
     password: String,
     indexUrl: String,
-    autoReconnect: Boolean
+    autoReconnect: Pair<Boolean, Duration>
 ) : KronoteSession(username, password, indexUrl, autoReconnect) {
 
     actual companion object {

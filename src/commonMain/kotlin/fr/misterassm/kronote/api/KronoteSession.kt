@@ -18,27 +18,34 @@ import io.ktor.client.network.sockets.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import kotlinx.datetime.LocalDate
+import kotlinx.coroutines.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlinx.serialization.modules.SerializersModule
+import kotlin.time.Duration
 
 abstract class KronoteSession(
     val username: String,
     val password: String,
     val indexUrl: String,
-    val autoReconnect: Boolean = true,
+    val keepSession: Pair<Boolean, Duration>
 ) : KronoteSessionAdapter {
 
     private val encryptionService by lazy { EncryptionFactory.createEncryption(this) }
     private val functionUrl by lazy { indexUrl.replace("eleve.html", "appelfonction/3/") }
     private val periodList by lazy { mutableListOf<Period>() }
 
-    internal var kronoteStatus = KronoteStatus.DISCONNECTED
-
     var lastPage = PronotePage.HOME
+    var kronoteStatus = KronoteStatus.DISCONNECTED
+        private set
+
     lateinit var sessionInfo: SessionInfo
+    var sessionJob: Job? = null
+
+    override fun keepSessionJob(): Result<Job> =
+        if (sessionJob == null) Result.failure(IllegalArgumentException("The Kronote object has not enabled keepSession"))
+        else Result.success(sessionJob!!)
 
     fun fetchKronoteStatus(): KronoteStatus = KronoteStatus.DISCONNECTED
 
@@ -46,18 +53,16 @@ abstract class KronoteSession(
         kronoteStatus = KronoteStatus.INITIALIZING
 
         KronoteSessionImpl.client.request(indexUrl) {
-            header("User-Agent", USER_AGENT)
+            header("User-Agent", "User-Agent: $USER_AGENT")
         }.bodyAsText().let {
             EncryptionAdapter.ENCRYPTION_PATTERN.toRegex().find(it)?.let { matchResult ->
                 val jsonElement = json.parseToJsonElement(matchResult.groupValues[2])
 
-                sessionInfo = SessionInfo(this, jsonElement.jsonObject["h"]?.jsonPrimitive?.longQuoted ?: return false)
+                sessionInfo = SessionInfo(this, jsonElement.jsonObject["h"]?.longQuoted ?: return false)
 
-                callFunction("FonctionParametres", mapOf(buildString {
-                    append("Uuid")
-                } to encryptionService.retrieveUniqueID(
-                    jsonElement.jsonObject["MR"]?.jsonPrimitive?.quotedString ?: TODO("THROW"),
-                    jsonElement.jsonObject["ER"]?.jsonPrimitive?.quotedString ?: TODO("THROW")
+                callFunction("FonctionParametres", mapOf("Uuid" to encryptionService.retrieveUniqueID(
+                    jsonElement.jsonObject["MR"]?.quotedString ?: TODO("THROW"),
+                    jsonElement.jsonObject["ER"]?.quotedString ?: TODO("THROW")
                 )))
 
                 encryptionService.apply { iv = tempIv }
@@ -120,11 +125,15 @@ abstract class KronoteSession(
             }?.let {
                 return periodList.addAll(it)
             } ?: false
-    }).apply { kronoteStatus = if (this) KronoteStatus.CONNECTED else KronoteStatus.FAILED_TO_LOGIN }
+    }).apply {
+        kronoteStatus = if (this) KronoteStatus.CONNECTED else KronoteStatus.FAILED_TO_LOGIN
+        prepareSessionKeeping()
+    }
 
     override suspend fun disconnect(): Result<Boolean> =
         if (kronoteStatus.isInitialing || kronoteStatus.isConnected()) {
             callFunction("SaisieDeconnexion")
+            keepSessionJob().onSuccess { it.cancel() }
             Result.success(true)
         } else Result.failure(IllegalStateException("Kronote is not connected to a Pronote server"))
 
@@ -163,6 +172,19 @@ abstract class KronoteSession(
         }
     }
 
+    override fun prepareSessionKeeping() {
+        if (keepSession.first) {
+            sessionJob = with(CoroutineScope(Dispatchers.Default)) {
+                launch {
+                    delay(keepSession.second)
+                    if (kronoteStatus.isConnected()) {
+                        callFunction("Presence")
+                    }
+                }
+            }
+        }
+    }
+
     override suspend fun retrieveTimetable(weekNumber: Int?): Timetable =
         navigationTo(PronotePage.TIMETABLE, if (weekNumber != null) mapOf("NumeroSemaine" to weekNumber) else mapOf())
             .jsonObject["donneesSec"]
@@ -187,7 +209,7 @@ abstract class KronoteSession(
     companion object {
         internal const val ERROR_TOKEN = "Erreur"
         internal const val USER_AGENT =
-            "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 Edg/90.0.818.46"
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 Edg/90.0.818.46"
 
         @OptIn(ExperimentalSerializationApi::class)
         val json: Json = Json {

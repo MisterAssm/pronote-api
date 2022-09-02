@@ -68,7 +68,7 @@ dependencies {
         username = "demonstration"
         password = "pronotevs"
         indexUrl = "https://demo.index-education.net/pronote/eleve.html?login=true"
-        autoReconnect = true // Default: false
+        enableKeepAlive() // or keepSessionAlive = true to 120.seconds
     }.getOrThrow() // or Result#onSuccess / Result#onFailure
 ```
 </p></details>

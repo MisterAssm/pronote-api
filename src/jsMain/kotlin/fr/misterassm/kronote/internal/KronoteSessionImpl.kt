@@ -4,12 +4,13 @@ import fr.misterassm.kronote.api.KronoteSession
 import fr.misterassm.kronote.api.models.retrieve.Timetable
 import io.ktor.client.*
 import kotlinx.datetime.LocalDate
+import kotlin.time.Duration
 
 internal actual class KronoteSessionImpl(
     username: String,
     password: String,
     indexUrl: String,
-    autoReconnect: Boolean
+    autoReconnect: Pair<Boolean, Duration>
 ) : KronoteSession(username, password, indexUrl, autoReconnect) {
 
     override suspend fun retrieveTimetable(localDate: LocalDate): Timetable {
