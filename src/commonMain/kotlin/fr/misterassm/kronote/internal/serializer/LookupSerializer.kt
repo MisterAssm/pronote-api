@@ -15,7 +15,5 @@ class LookupSerializer : KSerializer<Any> {
         encoder.encodeSerializableValue(actualSerializer as KSerializer<Any>, value)
     }
 
-    override fun deserialize(decoder: Decoder): Any {
-        error("Unsupported")
-    }
+    override fun deserialize(decoder: Decoder): Any = throw UnsupportedOperationException()
 }

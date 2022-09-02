@@ -167,7 +167,7 @@ abstract class KronoteSession(
         return with(callFunction(pronotePage.kPageName, dataMap)) {
             this.takeIf { !jsonObject.containsKey(ERROR_TOKEN) } ?: throw ConnectTimeoutException(
                 jsonObject[ERROR_TOKEN]?.jsonObject?.get("G")?.intQuoted?.asPronoteGender()?.title
-                    ?: "Une erreur est survenue"
+                    ?: "An error has occurred"
             )
         }
     }

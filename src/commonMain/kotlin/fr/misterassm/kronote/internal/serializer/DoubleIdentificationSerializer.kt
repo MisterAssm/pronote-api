@@ -19,9 +19,7 @@ object DoubleIdentificationSerializer : KSerializer<KronoteDoubleIdentification>
 
     @OptIn(InternalSerializationApi::class)
     override fun deserialize(decoder: Decoder): KronoteDoubleIdentification {
-
         decoder.decodeStructure(descriptor) {
-
             while (true) {
                 when (val index = decodeElementIndex(descriptor)) {
                     0 -> decodeSerializableElement(descriptor, 0, JsonArray::class.serializer()).apply {
@@ -31,17 +29,13 @@ object DoubleIdentificationSerializer : KSerializer<KronoteDoubleIdentification>
                     }
 
                     CompositeDecoder.DECODE_DONE -> break
-                    else -> error("Unexpected index: $index")
+                    else -> throw UnsupportedOperationException("Unexpected index: $index")
                 }
             }
-
         }
 
-        TODO("AN ERROR OCCURRED")
-
+        throw SerializationException("A problem occurred during deserialization")
     }
 
-    override fun serialize(encoder: Encoder, value: KronoteDoubleIdentification) {
-        TODO("Not yet implemented")
-    }
+    override fun serialize(encoder: Encoder, value: KronoteDoubleIdentification) = throw UnsupportedOperationException()
 }
