@@ -1,13 +1,13 @@
 package fr.misterassm.kronote.api.builder
 
-import fr.misterassm.kronote.api.Kronote
-import fr.misterassm.kronote.internal.KronoteImpl
+import fr.misterassm.kronote.api.adapter.KronoteSessionAdapter
+import fr.misterassm.kronote.internal.KronoteSessionImpl
 
-suspend fun connectKronote(init: KronoteBuilder.() -> Unit): Result<Kronote> = with(KronoteBuilder(init).build()) {
+suspend fun connectKronote(init: KronoteBuilder.() -> Unit): Result<KronoteSessionAdapter> = with(KronoteBuilder(init).build()) {
     if (connection()) Result.success(this) else Result.failure(TODO("Login exception"))
 }
 
-fun kronote(init: KronoteBuilder.() -> Unit): Kronote {
+fun kronote(init: KronoteBuilder.() -> Unit): KronoteSessionAdapter {
     return KronoteBuilder(init).build()
 }
 
@@ -22,6 +22,7 @@ class KronoteBuilder() {
     var indexUrl: String = ""
     var autoReconnect: Boolean = false
 
-    fun build(): Kronote = KronoteImpl(username, password, indexUrl, autoReconnect)
+    fun build(): KronoteSessionAdapter =
+        KronoteSessionImpl(username, password, indexUrl, autoReconnect)
 
 }

@@ -1,6 +1,6 @@
 package fr.misterassm.kronote.internal
 
-import fr.misterassm.kronote.api.Kronote
+import fr.misterassm.kronote.api.KronoteSession
 import fr.misterassm.kronote.api.models.enum.KronoteStatus
 import fr.misterassm.kronote.api.models.enum.PronotePage
 import fr.misterassm.kronote.api.models.retrieve.Timetable
@@ -8,12 +8,12 @@ import kotlinx.datetime.LocalDate
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 
-internal actual class KronoteImpl actual constructor(
+internal actual class KronoteSessionImpl actual constructor(
     actual val username: String,
     actual val password: String,
     actual val indexUrl: String,
     actual val autoReconnect: Boolean
-) : Kronote {
+) : KronoteSession {
 
     override fun fetchKronoteStatus(): KronoteStatus {
         TODO("Not yet implemented")

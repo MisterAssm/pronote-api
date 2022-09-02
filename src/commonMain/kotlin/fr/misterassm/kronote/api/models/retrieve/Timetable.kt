@@ -5,13 +5,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
 
+/*
+    Need to implement attachedHomework
+    Also check for Absences & recreations
+ */
 @Serializable
 data class Timetable(
     @SerialName("avecCoursAnnule") val withCancelledCourses: Boolean,
     @SerialName("ListeCours") var courseList: List<Course>,
     @SerialName("AvecTafPublie") val workPublished: Boolean = false,
-    @SerialName("cahierDeTextes") val attachedHomework: JsonElement? = null, // TODO: Not yet implemented
+    @SerialName("cahierDeTextes") val attachedHomework: JsonElement? = null,
     var weekNumber: Int = 0
-    // TODO: Absences ?
-    // TODO: recreations ?
 ) : RetrieveAdapter

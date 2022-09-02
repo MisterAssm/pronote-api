@@ -1,6 +1,7 @@
 package fr.misterassm.kronote.api.models.retrieve
 
 import fr.misterassm.kronote.api.models.enum.CourseStatus
+import fr.misterassm.kronote.api.models.enum.PronoteGender
 import fr.misterassm.kronote.api.models.identification.KronoteDoubleIdentification
 import fr.misterassm.kronote.api.models.identification.KronoteTripleIdentification
 import fr.misterassm.kronote.internal.tools.*
@@ -41,6 +42,8 @@ data class Course constructor(
 
         private fun findByGender(jsonArray: JsonArray, gender: Int): JsonObject? =
             jsonArray.firstOrNull { it.jsonObject["G"]!!.jsonPrimitive.int == gender }?.jsonObject
+        private fun findByGender(jsonArray: JsonArray, gender: PronoteGender): JsonObject? =
+            findByGender(jsonArray, gender.genderId)
 
         private fun genderToTripleIdentification(jsonArray: JsonArray, gender: Int): KronoteTripleIdentification? =
             findByGender(jsonArray, gender)?.let {
@@ -50,6 +53,11 @@ data class Course constructor(
                     gender
                 )
             }
+
+        private fun genderToTripleIdentification(
+            jsonArray: JsonArray,
+            gender: PronoteGender
+        ): KronoteTripleIdentification? = genderToTripleIdentification(jsonArray, gender.genderId)
 
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Course") {
             element<String>("N")
@@ -79,15 +87,12 @@ data class Course constructor(
                     (json["duree"]!!.jsonPrimitive.int * 30).minutes,
                     json["CouleurFond"]!!.jsonPrimitive.content,
                     json["DateDuCours"]!!.jsonObject["V"]!!.jsonPrimitive.content.toKronoteDate(),
-                    findByGender(listeContenus, TEACHER_GENDER)?.get("L")?.jsonPrimitive?.content?.let {
-                        KronoteDoubleIdentification(
-                            it,
-                            TEACHER_GENDER
-                        )
+                    findByGender(listeContenus, PronoteGender.TEACHER_GENDER)?.get("L")?.jsonPrimitive?.content?.let {
+                        KronoteDoubleIdentification(it, PronoteGender.TEACHER_GENDER.genderId)
                     },
-                    genderToTripleIdentification(listeContenus, SUBJECT_GENDER)!!,
-                    genderToTripleIdentification(listeContenus, ROOM_GENDER),
-                    genderToTripleIdentification(listeContenus, GROUP_GENDER)
+                    genderToTripleIdentification(listeContenus, PronoteGender.SUBJECT_GENDER)!!,
+                    genderToTripleIdentification(listeContenus, PronoteGender.ROOM_GENDER),
+                    genderToTripleIdentification(listeContenus, PronoteGender.GROUP_GENDER)
                 )
             } ?: error("Can be deserialized only by JSON")
         }

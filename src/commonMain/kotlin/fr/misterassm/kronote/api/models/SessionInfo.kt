@@ -1,10 +1,10 @@
 package fr.misterassm.kronote.api.models
 
-import fr.misterassm.kronote.api.Kronote
 import fr.misterassm.kronote.api.adapter.EncryptionAdapter
+import fr.misterassm.kronote.api.adapter.KronoteSessionAdapter
 
 data class SessionInfo(
-    private val kronote: Kronote,
+    private val kronote: KronoteSessionAdapter,
     val sessionId: Long,
 ) {
 

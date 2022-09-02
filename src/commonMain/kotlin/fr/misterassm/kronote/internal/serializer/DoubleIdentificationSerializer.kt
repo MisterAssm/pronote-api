@@ -1,7 +1,7 @@
 package fr.misterassm.kronote.internal.serializer
 
+import fr.misterassm.kronote.api.KronoteSession.Companion.json
 import fr.misterassm.kronote.api.models.identification.KronoteDoubleIdentification
-import fr.misterassm.kronote.internal.KronoteImpl
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
@@ -26,7 +26,7 @@ object DoubleIdentificationSerializer : KSerializer<KronoteDoubleIdentification>
                 when (val index = decodeElementIndex(descriptor)) {
                     0 -> decodeSerializableElement(descriptor, 0, JsonArray::class.serializer()).apply {
                         this.firstOrNull { it.jsonObject["G"]?.jsonPrimitive?.int == 16 }?.let {
-                            return@let KronoteImpl.json.decodeFromJsonElement(this)
+                            return@let json.decodeFromJsonElement(this)
                         }
                     }
 

@@ -1,6 +1,6 @@
 package fr.misterassm.kronote.internal.impl
 
-import fr.misterassm.kronote.api.Kronote
+import fr.misterassm.kronote.api.KronoteSession
 import fr.misterassm.kronote.api.adapter.EncryptionAdapter
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -14,7 +14,7 @@ import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-class JVMEncryptionImpl(private val kronote: Kronote) : EncryptionAdapter() {
+class JVMEncryptionImpl(private val kronote: KronoteSession) : EncryptionAdapter() {
 
     companion object {
         val keyFactory = KeyFactory.getInstance("RSA")!!

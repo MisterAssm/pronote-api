@@ -18,6 +18,8 @@ abstract class EncryptionAdapter {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
             'E', 'F'
         )
+
+        internal const val ENCRYPTION_PATTERN = "(onload=\"try . Start )\\((.+)\\) . catch"
     }
 
     fun encodeHexadecimal(data: ByteArray, toDigits: CharArray = DIGITS_LOWER): CharArray {

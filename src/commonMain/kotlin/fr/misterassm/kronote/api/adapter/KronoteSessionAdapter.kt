@@ -1,16 +1,20 @@
-package fr.misterassm.kronote.api
+package fr.misterassm.kronote.api.adapter
 
-import fr.misterassm.kronote.api.models.enum.KronoteStatus
 import fr.misterassm.kronote.api.models.enum.PronotePage
 import fr.misterassm.kronote.api.models.retrieve.Timetable
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.json.JsonElement
+import kotlin.jvm.JvmOverloads
 
-interface Kronote {
+interface KronoteSessionAdapter {
 
-    fun fetchKronoteStatus(): KronoteStatus
+    suspend fun initEncryption(): Boolean
+
+    suspend fun requestAuthentication(username: String, password: String): Boolean
 
     suspend fun connection(): Boolean
+
+    suspend fun disconnect(): Boolean
 
     suspend fun callFunction(function: String, dataMap: Map<String, Any> = mapOf()): JsonElement
 
@@ -19,9 +23,5 @@ interface Kronote {
     suspend fun retrieveTimetable(weekNumber: Int? = null): Timetable
 
     suspend fun retrieveTimetable(localDate: LocalDate): Timetable
-
-    companion object {
-        const val ERROR_TOKEN = "Erreur"
-    }
 
 }

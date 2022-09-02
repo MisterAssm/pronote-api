@@ -76,6 +76,8 @@ kotlin {
             dependencies {
                 implementation(KotlinX.serialization.json)
                 implementation(KotlinX.datetime)
+
+                compileOnly(Ktor.client.core)
             }
         }
         val commonTest by getting {
