@@ -66,7 +66,7 @@ data class Course constructor(
             element<String>("Statut", isOptional = true)
             element<Boolean>("estAnnule", isOptional = true)
             element<Int>("place", isOptional = true)
-            element<Int>("duree") // TODO: Convert to Duration
+            element<Int>("duree")
             element<String>("CouleurFond")
             element<JsonElement>("DateDuCours")
             element<JsonElement>("ListeContenus")
