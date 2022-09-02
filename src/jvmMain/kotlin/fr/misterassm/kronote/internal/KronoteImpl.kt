@@ -27,7 +27,7 @@ import java.time.Month
 import java.time.temporal.WeekFields
 import java.util.*
 
-internal actual class KronoteImpl actual constructor(
+actual class KronoteImpl actual constructor(
     actual val username: String,
     actual val password: String,
     actual val indexUrl: String,
@@ -128,10 +128,6 @@ internal actual class KronoteImpl actual constructor(
     }
 
     override fun fetchKronoteStatus(): KronoteStatus {
-        TODO("Not yet implemented")
-    }
-
-    override fun isAutoReconnect(): Boolean {
         TODO("Not yet implemented")
     }
 

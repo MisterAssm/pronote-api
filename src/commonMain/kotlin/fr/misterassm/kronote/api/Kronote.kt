@@ -10,8 +10,6 @@ interface Kronote {
 
     fun fetchKronoteStatus(): KronoteStatus
 
-    fun isAutoReconnect(): Boolean
-
     suspend fun connection(): Boolean
 
     suspend fun callFunction(function: String, dataMap: Map<String, Any> = mapOf()): JsonElement

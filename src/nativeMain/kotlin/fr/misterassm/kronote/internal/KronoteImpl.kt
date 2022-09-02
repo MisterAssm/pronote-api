@@ -8,7 +8,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 
-internal actual class KronoteImpl actual constructor(
+actual class KronoteImpl actual constructor(
     actual val username: String,
     actual val password: String,
     actual val indexUrl: String,
@@ -16,10 +16,6 @@ internal actual class KronoteImpl actual constructor(
 ) : Kronote {
 
     override fun fetchKronoteStatus(): KronoteStatus {
-        TODO("Not yet implemented")
-    }
-
-    override fun isAutoReconnect(): Boolean {
         TODO("Not yet implemented")
     }
 
