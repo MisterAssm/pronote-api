@@ -14,7 +14,7 @@ interface KronoteSessionAdapter {
 
     suspend fun connection(): Boolean
 
-    suspend fun disconnect(): Boolean
+    suspend fun disconnect(): Result<Boolean>
 
     suspend fun callFunction(function: String, dataMap: Map<String, Any> = mapOf()): JsonElement
 

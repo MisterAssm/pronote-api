@@ -42,6 +42,7 @@ data class Course constructor(
 
         private fun findByGender(jsonArray: JsonArray, gender: Int): JsonObject? =
             jsonArray.firstOrNull { it.jsonObject["G"]!!.jsonPrimitive.int == gender }?.jsonObject
+
         private fun findByGender(jsonArray: JsonArray, gender: PronoteGender): JsonObject? =
             findByGender(jsonArray, gender.genderId)
 
@@ -94,12 +95,10 @@ data class Course constructor(
                     genderToTripleIdentification(listeContenus, PronoteGender.ROOM_GENDER),
                     genderToTripleIdentification(listeContenus, PronoteGender.GROUP_GENDER)
                 )
-            } ?: error("Can be deserialized only by JSON")
+            } ?: throw UnsupportedOperationException("The object must be a json object to be deserialized")
         }
 
-        override fun serialize(encoder: Encoder, value: Course) {
-            TODO("Not yet implemented")
-        }
+        override fun serialize(encoder: Encoder, value: Course) = throw UnsupportedOperationException()
 
     }
 

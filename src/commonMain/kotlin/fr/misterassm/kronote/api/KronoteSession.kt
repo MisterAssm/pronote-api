@@ -34,13 +34,17 @@ abstract class KronoteSession(
     private val encryptionService by lazy { EncryptionFactory.createEncryption(this) }
     private val functionUrl by lazy { indexUrl.replace("eleve.html", "appelfonction/3/") }
     private val periodList by lazy { mutableListOf<Period>() }
-    var lastPage = PronotePage.HOME
 
+    internal var kronoteStatus = KronoteStatus.DISCONNECTED
+
+    var lastPage = PronotePage.HOME
     lateinit var sessionInfo: SessionInfo
 
     fun fetchKronoteStatus(): KronoteStatus = KronoteStatus.DISCONNECTED
 
     override suspend fun initEncryption(): Boolean {
+        kronoteStatus = KronoteStatus.INITIALIZING
+
         KronoteSessionImpl.client.request(indexUrl) {
             header("User-Agent", USER_AGENT)
         }.bodyAsText().let {
@@ -57,6 +61,7 @@ abstract class KronoteSession(
                 )))
 
                 encryptionService.apply { iv = tempIv }
+                kronoteStatus = KronoteStatus.INITIALIZED
                 return true
             }
         }
@@ -65,7 +70,6 @@ abstract class KronoteSession(
     }
 
     override suspend fun requestAuthentication(username: String, password: String): Boolean {
-
         callFunction(
             "Identification", mapOf(
                 "genreConnexion" to 0,
@@ -81,11 +85,7 @@ abstract class KronoteSession(
                 "loginTokenSAV" to "",
             )
         ).jsonObject.let {
-            if (it.containsKey(ERROR_TOKEN)) {
-                return false
-            }
-
-            it["donneesSec"]?.jsonObject?.get("donnees")?.jsonObject?.let { result ->
+            it.takeIf { ERROR_TOKEN !in it }?.get("donneesSec")?.jsonObject?.get("donnees")?.jsonObject?.let { result ->
                 if (encryptionService.executeChallenge(
                         username.lowercase(),
                         password,
@@ -102,10 +102,10 @@ abstract class KronoteSession(
         return false
     }
 
-    override suspend fun connection(): Boolean = initEncryption() && requestAuthentication(
+    override suspend fun connection(): Boolean = (initEncryption() && requestAuthentication(
         username.lowercase(),
         password
-    ) && kotlin.run {
+    ).apply { kronoteStatus = KronoteStatus.LOGGING_IN } && kotlin.run {
         callFunction("ParametresUtilisateur")
             .jsonObject["donneesSec"]
             ?.jsonObject?.get("donnees")
@@ -120,12 +120,13 @@ abstract class KronoteSession(
             }?.let {
                 return periodList.addAll(it)
             } ?: false
-    }
+    }).apply { kronoteStatus = if (this) KronoteStatus.CONNECTED else KronoteStatus.FAILED_TO_LOGIN }
 
-    override suspend fun disconnect(): Boolean {
-        callFunction("SaisieDeconnexion")
-        return true
-    }
+    override suspend fun disconnect(): Result<Boolean> =
+        if (kronoteStatus.isInitialing || kronoteStatus.isConnected()) {
+            callFunction("SaisieDeconnexion")
+            Result.success(true)
+        } else Result.failure(IllegalStateException("Kronote is not connected to a Pronote server"))
 
     override suspend fun callFunction(function: String, dataMap: Map<String, Any>): JsonElement =
         sessionInfo.findFunctionSessionOrder(encryptionService).let { functionSessionOrder ->

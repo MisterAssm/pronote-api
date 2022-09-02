@@ -7,6 +7,8 @@ enum class KronoteStatus(val isInitialing: Boolean) {
     LOGGING_IN(true),
     CONNECTED(false),
     DISCONNECTED(false),
-    FAILED_TO_LOGIN(false)
+    FAILED_TO_LOGIN(false);
+
+    fun isConnected() = equals(CONNECTED)
 
 }
