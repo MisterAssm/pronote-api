@@ -1,6 +1,7 @@
 package fr.misterassm.kronote.internal
 
 import fr.misterassm.kronote.api.KronoteSession
+import fr.misterassm.kronote.api.builder.KronoteBuilder
 import fr.misterassm.kronote.api.models.retrieve.Timetable
 import io.ktor.client.*
 import kotlinx.datetime.LocalDate
@@ -20,5 +21,8 @@ internal actual class KronoteSessionImpl(
     actual companion object {
         actual val client: HttpClient
             get() = TODO("Not yet implemented")
+
+        internal actual fun constructMultiplatformAbstract(builder: KronoteBuilder): KronoteSessionImpl =
+            KronoteSessionImpl(builder.username, builder.password, builder.indexUrl, builder.keepSessionAlive)
     }
 }

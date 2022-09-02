@@ -30,6 +30,6 @@ class KronoteBuilder() {
     }
 
     fun build(): KronoteSessionAdapter =
-        KronoteSessionImpl(username, password, indexUrl, keepSessionAlive)
+        KronoteSessionImpl.constructMultiplatformAbstract(this)
 
 }

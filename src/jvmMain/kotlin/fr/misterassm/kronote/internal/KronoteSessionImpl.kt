@@ -1,6 +1,7 @@
 package fr.misterassm.kronote.internal
 
 import fr.misterassm.kronote.api.KronoteSession
+import fr.misterassm.kronote.api.builder.KronoteBuilder
 import fr.misterassm.kronote.api.models.retrieve.Timetable
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
@@ -19,10 +20,14 @@ internal actual class KronoteSessionImpl(
 
     actual companion object {
         actual val client = HttpClient(OkHttp)
+        internal actual fun constructMultiplatformAbstract(builder: KronoteBuilder): KronoteSessionImpl =
+            KronoteSessionImpl(builder.username, builder.password, builder.indexUrl, builder.keepSessionAlive)
     }
 
     override suspend fun retrieveTimetable(localDate: LocalDate): Timetable {
-        return retrieveTimetable(localDate.toJavaLocalDate().get(WeekFields.of(DayOfWeek.MONDAY, 7).weekOfYear()) - 34).apply {
+        return retrieveTimetable(
+            localDate.toJavaLocalDate().get(WeekFields.of(DayOfWeek.MONDAY, 7).weekOfYear()) - 34
+        ).apply {
             courseList = courseList.filter { it.date.date == localDate }
         }
     }
