@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "io.github.misterassm"
-version = "0.2.1"
+version = "0.3.0"
 
 ext["signing.keyId"] = null
 ext["signing.password"] = null
