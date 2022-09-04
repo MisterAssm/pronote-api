@@ -47,7 +47,7 @@ abstract class KronoteSession(
         if (sessionJob == null) Result.failure(IllegalArgumentException("The Kronote object has not enabled keepSession"))
         else Result.success(sessionJob!!)
 
-    fun fetchKronoteStatus(): KronoteStatus = KronoteStatus.DISCONNECTED
+    fun fetchKronoteStatus(): KronoteStatus = kronoteStatus
 
     override suspend fun initEncryption(): Boolean {
         kronoteStatus = KronoteStatus.INITIALIZING
