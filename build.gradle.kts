@@ -53,6 +53,8 @@ kotlin {
     }
 
     js(IR) {
+        nodejs()
+
         compilations.all {
             compileKotlinTask.kotlinOptions.freeCompilerArgs += listOf("-Xerror-tolerance-policy=SEMANTIC")
         }
@@ -88,8 +90,17 @@ kotlin {
             }
         }
         val jvmTest by getting
-        val jsMain by getting
-        val jsTest by getting
+        val jsMain by getting {
+            dependencies {
+                implementation(npm("aes-js", "3.1.2"))
+                implementation(npm("md5", "2.3.0"))
+            }
+        }
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test-js"))
+            }
+        }
         val nativeMain by getting
         val nativeTest by getting
     }
