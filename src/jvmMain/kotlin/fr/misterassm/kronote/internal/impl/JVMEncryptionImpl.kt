@@ -14,7 +14,7 @@ import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-class JVMEncryptionImpl(private val kronote: KronoteSession) : EncryptionAdapter() {
+internal class JVMEncryptionImpl(private val kronote: KronoteSession) : EncryptionAdapter() {
 
     companion object {
         val keyFactory = KeyFactory.getInstance("RSA")!!
@@ -52,7 +52,10 @@ class JVMEncryptionImpl(private val kronote: KronoteSession) : EncryptionAdapter
             init(
                 Cipher.ENCRYPT_MODE,
                 SecretKeySpec(MessageDigest.getInstance("MD5").digest(byteKey), "AES"),
-                IvParameterSpec(if (tempIv.contentEquals(this@JVMEncryptionImpl.iv)) MessageDigest.getInstance("MD5").digest(this@JVMEncryptionImpl.iv) else this@JVMEncryptionImpl.iv)
+                IvParameterSpec(
+                    if (tempIv.contentEquals(this@JVMEncryptionImpl.iv)) MessageDigest.getInstance("MD5")
+                        .digest(this@JVMEncryptionImpl.iv) else this@JVMEncryptionImpl.iv
+                )
             )
         }.doFinal(plainTextByte)))
 
@@ -72,7 +75,12 @@ class JVMEncryptionImpl(private val kronote: KronoteSession) : EncryptionAdapter
             }.doFinal(tempIv))
         }
 
-    override suspend fun executeChallenge(username: String, password: String, alea: String, challenge: String): Boolean {
+    override suspend fun executeChallenge(
+        username: String,
+        password: String,
+        alea: String,
+        challenge: String
+    ): Boolean {
         val userKey = (username + String(
             encodeHexadecimal(
                 MessageDigest.getInstance("SHA-256").apply {
