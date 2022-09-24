@@ -23,6 +23,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlinx.serialization.modules.SerializersModule
+import kotlin.jvm.JvmOverloads
 import kotlin.time.Duration
 
 abstract class KronoteSession(
@@ -58,10 +59,14 @@ abstract class KronoteSession(
 
                 sessionInfo = SessionInfo(this, jsonElement.jsonObject["h"]?.longQuoted ?: return false)
 
-                callFunction("FonctionParametres", mapOf("Uuid" to encryptionService.retrieveUniqueID(
-                    jsonElement.jsonObject["MR"]?.quotedString ?: TODO("THROW"),
-                    jsonElement.jsonObject["ER"]?.quotedString ?: TODO("THROW")
-                )))
+                callFunction(
+                    "FonctionParametres", mapOf(
+                        "Uuid" to encryptionService.retrieveUniqueID(
+                            jsonElement.jsonObject["MR"]?.quotedString ?: TODO("THROW"),
+                            jsonElement.jsonObject["ER"]?.quotedString ?: TODO("THROW")
+                        )
+                    )
+                )
 
                 encryptionService.apply { iv = tempIv }
                 kronoteStatus = KronoteStatus.INITIALIZED
@@ -184,8 +189,10 @@ abstract class KronoteSession(
     }
 
     override suspend fun retrieveTimetable(weekNumber: Int?): Timetable =
-        navigationTo(PronotePage.TIMETABLE, if (weekNumber != null) mapOf("NumeroSemaine" to weekNumber) else mapOf())
-            .jsonObject["donneesSec"]
+        navigationTo(
+            PronotePage.TIMETABLE,
+            if (weekNumber != null) mapOf("NumeroSemaine" to weekNumber) else mapOf()
+        ).jsonObject["donneesSec"]
             ?.jsonObject
             ?.get("donnees")
             ?.let {
